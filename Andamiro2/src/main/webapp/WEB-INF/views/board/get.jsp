@@ -160,7 +160,6 @@ function recommend(bno, callback, error) {
 }
 var replyService = (function() {
 	function add(reply, callback, error) {
-		// console.log("add reply..................");
 		$.ajax({
 			type : 'post',
 			url : '/replies/new',
@@ -303,9 +302,7 @@ var replyService = (function() {
 		
 		
 		function showReplyPage(replyCount) {
-			console.log("pageNum : " + pageNum);
-			console.log("replyCount : " + replyCount);
-			
+	
 			var endNum = Math.ceil(pageNum / 10.0)*10;
 			var startNum = endNum -9;
 			
@@ -340,9 +337,7 @@ var replyService = (function() {
 		
 		replyPageFooter.on("click", "li a", function(e) {
 			e.preventDefault();
-			console.log("page click");
 			var targetPageNum = $(this).attr("href");
-			console.log("targetPageNum: " + targetPageNum);
 			pageNum = targetPageNum;
 			showList(pageNum);
 		});
@@ -381,7 +376,6 @@ var replyService = (function() {
 		
 		$('.chat').on('click', 'li', function(e) {
 			var rno = $(this).data('rno');
-			console.log(rno); // 각각의 댓글(각각의 li)을 클릭했을 때 콘솔창에 rno번호를 뿌린다.
 			replyService.get(rno, function(reply){
 				modalInputReply.val(reply.reply);
 				modalInputReplyer.val(reply.replyer);
@@ -448,8 +442,6 @@ var replyService = (function() {
 			recommend(bnoValue
 				, function(result){
 					alert("추천하셨습니다.");
-					//console.log(result);
-					console.log(result);
 					$('#recommendCount').html(result);
 				}, function(er) {
 					console.log("진짜로 잘 모르겠다구요,....");

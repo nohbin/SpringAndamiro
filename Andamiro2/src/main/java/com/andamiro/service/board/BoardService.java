@@ -2,6 +2,9 @@ package com.andamiro.service.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.andamiro.domain.board.BoardVO;
 import com.andamiro.domain.board.Criteria;
 
@@ -17,7 +20,7 @@ public interface BoardService {
 	public boolean delete(Long bno);
 	
 	public int getTotalCount(Criteria cri);
-	public int recommend(Long bno);
+	public Long recommend(Long bno);
 
 	
 	

@@ -1,5 +1,8 @@
 package com.andamiro.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -93,9 +96,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{bno}", consumes="application/json", produces={ MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Long> recommend(@PathVariable("bno") Long bno) {
-		int result = service.recommend(bno);
-		BoardVO board = service.read(bno);
-		Long updatedRecommendCount = board.getRecommendCount();
-		return result == 1 ? new ResponseEntity<>(updatedRecommendCount, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		Long result = service.recommend(bno);
+		return result != 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
