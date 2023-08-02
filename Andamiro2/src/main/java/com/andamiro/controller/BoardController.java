@@ -91,8 +91,11 @@ public class BoardController {
 	
 	}
 	@ResponseBody
-	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{bno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> recommend(@PathVariable("bno") Long bno) {
-		return service.recommend(bno) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{bno}", consumes="application/json", produces={ MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Long> recommend(@PathVariable("bno") Long bno) {
+		int result = service.recommend(bno);
+		BoardVO board = service.read(bno);
+		Long updatedRecommendCount = board.getRecommendCount();
+		return result == 1 ? new ResponseEntity<>(updatedRecommendCount, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

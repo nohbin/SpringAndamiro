@@ -138,6 +138,26 @@
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 console.log(token + "/" + header);
+function recommend(bno, callback, error) {
+	$.ajax({
+		type : 'put',
+		url : '/board/recommend/'+bno,
+		contentType : "application/json; charset=utf-8",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(result, status, xhr) {
+			if (callback) {
+				callback(result);
+			}
+		},
+		error : function(xhr, status, er) {
+			if (error) {
+				error(er);
+			}
+		}
+	});
+}
 var replyService = (function() {
 	function add(reply, callback, error) {
 		// console.log("add reply..................");
@@ -168,6 +188,7 @@ var replyService = (function() {
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 				function(data) {
 					if(callback) {
+						console.log(data);
 						callback(data.replyCount, data.list);
 					}
 		}).fail (function(xhr, status, err) {
@@ -258,6 +279,7 @@ var replyService = (function() {
 
 	/////////////////////////////////////////////////////////////////////
 	$(document).ready(function() {
+
 		
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
@@ -410,42 +432,6 @@ var replyService = (function() {
 			});
 		});
 	
-		
-	});
-
-function recommend(bno, callback, error) {
-	$.ajax({
-		type : 'put',
-		url : '/board/recommend/'+bno,
-		data : JSON.stringify(board),
-		contentType : "application/json; charset=utf-8",
-		beforeSend : function(xhr){
-			xhr.setRequestHeader(header, token);
-		},
-		success : function(result, status, xhr) {
-			if (callback) {
-				callback(result);
-			}
-		},
-		error : function(xhr, status, er) {
-			if (error) {
-				error(er);
-			}
-		}
-	});
-}
-function refreshRecommendCount() {
-	var bno = param.bno;
-	$.getJSON("/board/get?bno=" + bno + ".json", function(data) {
-				if(callback) { callback(data.recommendCount); }
-	}).fail (function(xhr, status, err) {
-		if(error) { error(); }
-	});
-}
-				
-	//////////////////////////////////////////////////////////////////////
-	$(document).ready(function() {
-		var bnoValue = '${board.bno}';
 		var operForm = $("#operForm");
 		
 		$("button[data-oper='modify']").on("click", function(e) {
@@ -461,15 +447,19 @@ function refreshRecommendCount() {
 		$('button[data-oper="recommend"]').on('click', function(e) {
 			recommend(bnoValue
 				, function(result){
-					alert(result);
-					var newRecommendCount = refreshRecommendCount();
-					$('#recommendCount').html(newRecommendCount);
+					alert("추천하셨습니다.");
+					//console.log(result);
+					console.log(result);
+					$('#recommendCount').html(result);
 				}, function(er) {
 					console.log("진짜로 잘 모르겠다구요,....");
 				}
 			);
 		});
 	});
+
+
+
 </script>
 <jsp:include page="../footer.jsp"></jsp:include> 
 </body>
