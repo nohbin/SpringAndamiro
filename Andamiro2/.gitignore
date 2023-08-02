@@ -16,6 +16,10 @@ local.properties
 .classpath
 .project
 
+target/*
+META-INF/*
+.springBeans
+
 # External tool builders
 .externalToolBuilders/
 
