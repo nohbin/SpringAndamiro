@@ -1,0 +1,98 @@
+.container{ 
+  padding-top: 30px;
+  margin: 0 auto;
+  height: 800px;
+}
+.contentbox{
+  width: 100%;
+  margin: 0 auto;
+  height: 1200px;
+
+}
+.infobox{
+  margin: 0 auto;
+  width: 40%;
+
+}
+.info1{
+  text-align: center;
+  border: 1px solid  #f5b92f ;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+
+}
+
+.info1_1{
+  background-color: #ffcc23dc;
+  width: 30%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5px 10px 10px 5px;
+  border-radius: 10px;
+}
+.info1_2{
+  font-size: 20px;
+  line-height: 25px;
+}
+.info2_2{
+  font-size: 20px;
+}
+.info2{
+  text-align: center;
+  border: 1px solid  #f5b92f ;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  height: 100px;
+
+}
+.info2_1{
+  background-color: #ffcc23dc;
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px 10px 5px;
+  border-radius: 10px;
+}
+.qa_box{
+  margin: 0 auto;
+  width: 60%;
+  margin-top: 50px;
+}
+.qa{
+  background-color: #ffcc23dc;
+  width: 10%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.aw{
+  border: 1px solid  #f5b92f ;
+  padding: 10px 15px 15px 10px;
+  line-height: 25px;
+}
+input[type=button]{
+  width: 20%;
+  margin-left: 750px;
+  margin-top: 50px;
+  text-align: center;
+  background-color: #fa921cd8 ;
+  border: 3px solid #bbb7b7;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+input[type=button]:hover{
+  color: white;
+}

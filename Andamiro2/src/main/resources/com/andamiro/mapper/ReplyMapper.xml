@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.andamiro.mapper.ReplyMapper">
+<insert id="insert">
+	insert into boardReply (rno, bno, reply, replyer)
+					values (seq_reply.nextval, #{bno}, #{reply}, #{replyer})
+</insert>
+<select id="read" resultType="com.andamiro.domain.board.ReplyVO">
+	select * from boardReply where rno = #{rno}
+</select>
+<delete id="delete">
+	delete from boardReply where rno = #{rno}
+</delete>
+<update id="update">
+	update boardReply set reply=#{reply}, replyer=#{replyer}, modDate=sysdate where rno=#{rno}
+</update>
+<select id="getListWithPaging" resultType="com.andamiro.domain.board.ReplyVO">
+	<![CDATA[
+	select * from (
+						select /*+ INDEX(boardReply idx_reply)*/
+							rownum rn, rno, bno, reply, replyer, replyDate, modDate, recommendCount
+						from boardReply
+						where bno = #{bno} 
+							and rno > 0
+							and rownum <= #{cri.pageNum} * #{cri.amount}
+					)
+	where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	]]>
+</select>
+<select id="getCountByBno" resultType="int">
+	<![CDATA[
+	select count(rno) from boardReply where bno = #{bno}
+	]]>
+</select>
+</mapper>
