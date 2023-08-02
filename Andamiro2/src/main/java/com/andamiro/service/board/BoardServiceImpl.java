@@ -44,12 +44,12 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public BoardVO read(Long bno) {
-
+	    // 조회 수 중복 방지
 		ServletRequestAttributes sessionAttr = ((ServletRequestAttributes) RequestContextHolder .getRequestAttributes());
 
 		HttpServletRequest request = sessionAttr.getRequest();
 		HttpServletResponse response = sessionAttr.getResponse();
-	    // 조회 수 중복 방지
+		
 	    Cookie oldCookie = null;
 	    Cookie[] cookies = request.getCookies();
 	    if (cookies != null) {

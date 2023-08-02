@@ -48,7 +48,7 @@ a {
 			<div class="container d-flex flex-wrap">
 				<ul class="nav me-auto">
 					<li class="nav-item">
-						<a href="<c:url value="/BestMainServlet?command=main"/>" class="nav-link link-dark px-2 active" aria-current="page">Home</a>
+						<a href="<c:url value="/main"/>" class="nav-link link-dark px-2 active" aria-current="page">Home</a>
 					</li>
 					<li class="nav-item">
 						<a href="<c:url value="/recipe/recipe_list"/>" class="nav-link link-dark px-2">레시피</a>
@@ -62,6 +62,9 @@ a {
 					<li class="nav-item">
 						<a href='<c:url value="/subscribe/subscribe"/>'					
 					 class="nav-link link-dark px-2">구독</a>
+					<li class="nav-item">
+						<a href='<c:url value="/board/list"/>'					
+					 class="nav-link link-dark px-2">게시판</a>
 				</ul>
 				<div class="text-end">
 					<c:choose>
