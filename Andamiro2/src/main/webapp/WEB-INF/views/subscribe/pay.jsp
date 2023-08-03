@@ -66,14 +66,14 @@
        	IMP.request_pay({
        		pg: "kakao",
        	    pay_method: "kakaopay",
-    	    merchant_uid: "order_no"+memberNumber,
+    	    merchant_uid: "order_no"+new Date().getTime(),
     	    name : '안다미로 구독 서비스',
     	    amount : 10,
     	}, function(rsp) { // callback 로직
 			if(rsp.success) {
 				var msg = '결제가 완료되었습니다.';
-				alert(msg);
 				window.location.href = "../SubscribeServlet?command=sub_join&userid=${loginUser.id}";
+				alert(msg);
 			}else {
 				var msg = '결제에 실패하였습니다.'
 				msg += '오류 : ' + rsp.error_msg;

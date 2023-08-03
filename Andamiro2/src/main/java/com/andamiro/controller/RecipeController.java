@@ -193,8 +193,6 @@ public class RecipeController {
 			}
 		}
 	    
-	    
-	    
 	    model.addAttribute("recipe", recipeDTO);
 	    model.addAttribute("ingreList", ingreList);
 	    model.addAttribute("recipeOrderList", recipeOrderList);
