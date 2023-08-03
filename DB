@@ -141,7 +141,7 @@ CREATE TABLE subscribeMember (
     	membernumber    NUMBER(5),
     	sub_start             DATE  DEFAULT  SYSDATE,
         sub_end 		DATE  DEFAULT  (SYSDATE + INTERVAL '30' DAY),
-        userid varchar2(255)
+        status             number
 );
 --식단 테이블
 CREATE TABLE diet (
