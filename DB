@@ -1,0 +1,492 @@
+
+
+drop table subscribemember;
+drop table submemberrecipe;
+drop table recipepicture;
+drop table recipeorder;
+drop table recipemainingre;
+drop table recipekind;
+drop table recipeingre;
+drop table recipehow;
+drop table eventmain;
+drop table dietdetail;
+drop table diet;
+drop table andamiroreview;
+drop table andamirorecipe_detail;
+drop table andamirorecipe;
+drop table andamiromember_auth;
+drop table andamiromember;
+--회원테이블
+CREATE TABLE andamiromember (
+  memberNumber NUMBER PRIMARY KEY,
+  id VARCHAR2(255) NOT NULL UNIQUE,
+  pwd VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255) NOT NULL,
+  phone VARCHAR2(255) NOT NULL UNIQUE,
+  email VARCHAR2(255) NOT NULL UNIQUE,
+  joinDate date default sysdate,
+  subscribe VARCHAR2(255),
+  authority varchar2(20) default 'ROLE_USER'
+);
+
+create table andamiromember_auth (
+    id varchar2(50) not null,
+    auth varchar2(50) not null,
+);
+
+--레시피 관련 테이블
+CREATE TABLE andamiroRecipe (
+	recipeID            NUMBER	        PRIMARY KEY,
+	memberNumber        NUMBER          NOT NULL,
+    userID              VARCHAR(255),
+	recipeName	        VARCHAR(255)	NOT NULL,
+	
+	recipeGrade	        VARCHAR(255)	NULL,
+	recipetag1	        VARCHAR(255)	NULL,
+	recipetag2	        VARCHAR(255)	NULL,
+	recipetag3	        VARCHAR(255)	NULL,
+	recipeView	        NUMBER	        default 0,
+	recipeCompetition   VARCHAR(255)    NULL,
+    recipeDetailID      NUMBER          NOT NULL,
+    recipeRegDate       date            default sysdate,
+	reviewcount	NUMBER
+
+);
+
+create table andamiroRecipe_detail(
+    recipeDetailID      NUMBER          PRIMARY KEY,
+    recipeID            NUMBER          NOT NULL,
+    recipeHow           NUMBER          NOT NULL,
+    recipeKind          NUMBER          NOT NULL,
+    recipeMainIngre     NUMBER          NOT NULL,
+    recipePicId         NUMBER          NOT NULL,
+    OrderId             NUMBER          NOT NULL,
+    recipeingreId       NUMBER          NOT NULL,
+    recipeDiscription   VARCHAR(255)    NOT NULL,
+    recipeforperson     VARCHAR(255)    NOT NULL,
+    recipefortime       VARCHAR(255)    NOT NULL,
+    recipeforlevel      VARCHAR(255)    NOT NULL
+);
+
+create table recipekind (
+    recipeKindId number primary key,
+    recipeKind VARCHAR(255)
+);
+
+create table recipeMainIngre(
+    recipeIngreId number PRIMARY KEy,
+    recipeIngre varchar(255)
+);
+
+create table recipeHow(
+    recipeHowId number Primary Key,
+    recipeHow VARCHAR(255)
+);
+create table recipeingre (
+    ingreid number PRIMARY key,
+    recipeId number not null,
+    ingre1 varchar(255),
+    ingre2 varchar(255),
+    ingre3 varchar(255),
+    ingre4 varchar(255),
+    ingre5 varchar(255),
+    ingre6 varchar(255),
+    ingre7 varchar(255),
+    ingre8 varchar(255),
+    ingre9 varchar(255),
+    ingre10 varchar(255),
+    ingre11 varchar(255),
+    ingre12 varchar(255)
+);
+CREATE TABLE recipePicture (
+	recipePicid	NUMBER	PRIMARY key ,
+    recipeId number not null,
+    mainPicture	        VARCHAR(255)	NOT NULL,
+	pic1	VARCHAR(255)		NULL,
+	pic2	VARCHAR(255)		NULL,
+	pic3	VARCHAR(255)		NULL,
+	pic4	VARCHAR(255)		NULL,
+	pic5	VARCHAR(255)		NULL,
+    uploadpath varchar(255)
+);
+
+drop table recipepicture;
+
+CREATE TABLE recipeOrder (
+  recipeOrderId NUMBER PRIMARY KEY,
+  recipeId number not null,
+  order1 VARCHAR(255),
+  order2 VARCHAR(255),
+  order3 VARCHAR(255),
+  order4 VARCHAR(255),
+  order5 VARCHAR(255)
+);
+
+--리뷰 테이블
+CREATE TABLE andamiroreview (
+  reviewnum NUMBER(20) PRIMARY KEY,
+  recipeid number NOT NULL,
+  recipename VARCHAR2(255) NOT NULL,
+  reviewpicture VARCHAR2(255),
+  review VARCHAR2(255),
+  recipegrade VARCHAR2(255),
+  regdate DATE DEFAULT SYSDATE,
+  id VARCHAR2(255)
+);
+
+
+--구독 테이블
+CREATE TABLE subscribeMember (
+    	subNumber          NUMBER(5)    PRIMARY KEY,
+    	membernumber    NUMBER(5),
+    	sub_start             DATE  DEFAULT  SYSDATE,
+        sub_end 		DATE  DEFAULT  (SYSDATE + INTERVAL '30' DAY),
+        status             number
+);
+--식단 테이블
+CREATE TABLE diet (
+	dietNumber	    number(5)		    PRIMARY KEY,
+	subNumber	    number(5)		    NULL,
+	diet_kind	    	    varchar(255)		    NOT NULL,
+	diet_menu	    varchar(255)		    NOT NULL,
+	diet_picture             varchar(255)		    NOT NULL
+);
+
+CREATE TABLE dietDetail (
+	dietDetailID	number(5)		    PRIMARY KEY,
+	dietNumber	number(5)		    NOT NULL,
+	foodName	varchar(255)		    NOT NULL,
+	kcal	            varchar(255)		    NOT NULL,
+	component	varchar(1000)		    NOT NULL
+); 
+
+CREATE TABLE subMemberRecipe (
+	recipeID	number		NOT NULL ,
+	subNumber	number		NOT NULL 
+);
+
+CREATE TABLE eventMain (
+	eventNo	NUMBER	NULL,
+	eventkind	VARCHAR(255)	NULL,
+	term	VARCHAR(255)	NULL,
+	ing	VARCHAR(255)	NULL,
+	imgsum	VARCHAR(255)	NULL,
+	poster	VARCHAR(255)	NULL
+);
+
+--시퀀스
+CREATE SEQUENCE member_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE recipeid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE recipedetailid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE ingreid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE orderid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE picid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE reviewnum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE  dietNum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE   subNum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE   dietDetailID_seq START WITH 1 INCREMENT BY 1 nocache;
+
+
+
+insert into recipekind values(01 , '한식');
+insert into recipekind values(02 , '일식');
+insert into recipekind values(03 , '양식');
+insert into recipekind values(04 , '중식');
+insert into recipekind values(99 , '기타');
+
+insert into recipehow values(1,'볶음');
+insert into recipehow values(2,'튀김');
+insert into recipehow values(3,'삶기');
+insert into recipehow values(4,'끓이기');
+insert into recipehow values(5,'굽기');
+insert into recipehow values(6,'찜');
+insert into recipehow values(99,'기타');
+
+insert into recipemainingre values(1,'돼지고기');
+insert into recipemainingre values(2,'소고기');
+insert into recipemainingre values(3,'닭고기');
+insert into recipemainingre values(4,'육류');
+insert into recipemainingre values(5,'해물');
+insert into recipemainingre values(99,'기타');
+select r_main.*, r_detail.*, r_pic.*, r_order.*, r_ingre.* 
+    	from andamirorecipe r_main, andamirorecipe_detail r_detail, recipepicture r_pic, recipeorder r_order, recipeingre r_ingre;
+commit;
+
+
+
+create user andamiro identified by andamiro;
+
+
+grant connect, resource, dba to andamiro;
+
+
+
+
+drop table subscribemember;
+drop table submemberrecipe;
+drop table recipepicture;
+drop table recipeorder;
+drop table recipemainingre;
+drop table recipekind;
+drop table recipeingre;
+drop table recipehow;
+drop table eventmain;
+drop table dietdetail;
+drop table diet;
+drop table andamiroreview;
+drop table andamirorecipe_detail;
+drop table andamirorecipe;
+drop table andamiromember_auth;
+drop table andamiromember;
+drop table andamiroBoard;
+drop table boardReply;
+--회원테이블
+CREATE TABLE andamiromember (
+  memberNumber NUMBER PRIMARY KEY,
+  id VARCHAR2(255) NOT NULL UNIQUE,
+  pwd VARCHAR2(255) NOT NULL,
+  name VARCHAR2(255) NOT NULL,
+  phone VARCHAR2(255) NOT NULL UNIQUE,
+  email VARCHAR2(255) NOT NULL UNIQUE,
+  joinDate date default sysdate,
+  subscribe VARCHAR2(255),
+  authority varchar2(20) default 'ROLE_USER'
+);
+
+create table andamiromember_auth (
+    id varchar2(50) not null,
+    auth varchar2(50) not null,
+);
+
+--레시피 관련 테이블
+CREATE TABLE andamiroRecipe (
+	recipeID            NUMBER	        PRIMARY KEY,
+	memberNumber        NUMBER          NOT NULL,
+    userID              VARCHAR(255),
+	recipeName	        VARCHAR(255)	NOT NULL,
+	
+	recipeGrade	        VARCHAR(255)	NULL,
+	recipetag1	        VARCHAR(255)	NULL,
+	recipetag2	        VARCHAR(255)	NULL,
+	recipetag3	        VARCHAR(255)	NULL,
+	recipeView	        NUMBER	        default 0,
+	recipeCompetition   VARCHAR(255)    NULL,
+    recipeDetailID      NUMBER          NOT NULL,
+    recipeRegDate       date            default sysdate,
+	reviewcount	NUMBER
+
+);
+
+create table andamiroRecipe_detail(
+    recipeDetailID      NUMBER          PRIMARY KEY,
+    recipeID            NUMBER          NOT NULL,
+    recipeHow           NUMBER          NOT NULL,
+    recipeKind          NUMBER          NOT NULL,
+    recipeMainIngre     NUMBER          NOT NULL,
+    recipePicId         NUMBER          NOT NULL,
+    OrderId             NUMBER          NOT NULL,
+    recipeingreId       NUMBER          NOT NULL,
+    recipeDiscription   VARCHAR(255)    NOT NULL,
+    recipeforperson     VARCHAR(255)    NOT NULL,
+    recipefortime       VARCHAR(255)    NOT NULL,
+    recipeforlevel      VARCHAR(255)    NOT NULL
+);
+
+create table recipekind (
+    recipeKindId number primary key,
+    recipeKind VARCHAR(255)
+);
+
+create table recipeMainIngre(
+    recipeIngreId number PRIMARY KEy,
+    recipeIngre varchar(255)
+);
+
+create table recipeHow(
+    recipeHowId number Primary Key,
+    recipeHow VARCHAR(255)
+);
+create table recipeingre (
+    ingreid number PRIMARY key,
+    recipeId number not null,
+    ingre1 varchar(255),
+    ingre2 varchar(255),
+    ingre3 varchar(255),
+    ingre4 varchar(255),
+    ingre5 varchar(255),
+    ingre6 varchar(255),
+    ingre7 varchar(255),
+    ingre8 varchar(255),
+    ingre9 varchar(255),
+    ingre10 varchar(255),
+    ingre11 varchar(255),
+    ingre12 varchar(255)
+);
+CREATE TABLE recipePicture (
+	recipePicid	NUMBER	PRIMARY key ,
+    recipeId number not null,
+    mainPicture	        VARCHAR(255)	NOT NULL,
+	pic1	VARCHAR(255)		NULL,
+	pic2	VARCHAR(255)		NULL,
+	pic3	VARCHAR(255)		NULL,
+	pic4	VARCHAR(255)		NULL,
+	pic5	VARCHAR(255)		NULL,
+    uploadpath varchar(255)
+);
+
+drop table recipepicture;
+
+CREATE TABLE recipeOrder (
+  recipeOrderId NUMBER PRIMARY KEY,
+  recipeId number not null,
+  order1 VARCHAR(255),
+  order2 VARCHAR(255),
+  order3 VARCHAR(255),
+  order4 VARCHAR(255),
+  order5 VARCHAR(255)
+);
+
+--리뷰 테이블
+CREATE TABLE andamiroreview (
+  reviewnum NUMBER(20) PRIMARY KEY,
+  recipeid number NOT NULL,
+  recipename VARCHAR2(255) NOT NULL,
+  reviewpicture VARCHAR2(255),
+  review VARCHAR2(255),
+  recipegrade VARCHAR2(255),
+  regdate DATE DEFAULT SYSDATE,
+  id VARCHAR2(255)
+);
+
+
+--구독 테이블
+CREATE TABLE subscribeMember (
+    	subNumber          NUMBER(5)    PRIMARY KEY,
+    	membernumber    NUMBER(5),
+    	sub_start             DATE  DEFAULT  SYSDATE,
+        sub_end 		DATE  DEFAULT  (SYSDATE + INTERVAL '30' DAY),
+        userid varchar2(255)
+);
+--식단 테이블
+CREATE TABLE diet (
+	dietNumber	    number(5)		    PRIMARY KEY,
+	subNumber	    number(5)		    NULL,
+	diet_kind	    	    varchar(255)		    NOT NULL,
+	diet_menu	    varchar(255)		    NOT NULL,
+	diet_picture             varchar(255)		    NOT NULL
+);
+
+CREATE TABLE dietDetail (
+	dietDetailID	number(5)		    PRIMARY KEY,
+	dietNumber	number(5)		    NOT NULL,
+	foodName	varchar(255)		    NOT NULL,
+	kcal	            varchar(255)		    NOT NULL,
+	component	varchar(1000)		    NOT NULL
+); 
+
+CREATE TABLE subMemberRecipe (
+	recipeID	number		NOT NULL ,
+	subNumber	number		NOT NULL 
+);
+
+CREATE TABLE eventMain (
+	eventNo	NUMBER	NULL,
+	eventkind	VARCHAR(255)	NULL,
+	term	VARCHAR(255)	NULL,
+	ing	VARCHAR(255)	NULL,
+	imgsum	VARCHAR(255)	NULL,
+	poster	VARCHAR(255)	NULL
+);
+
+
+-- board category table --
+create table boardCategory (
+    cno number(2,0) primary key,
+    category varchar2(255)
+);
+
+-- andamiro board table: andamiroBoard --
+create table andamiroBoard (
+    cno number (2,0),
+    bno number(10,0) not null,
+    title varchar2(200) not null,
+    writer varchar2(50) not null,
+    content varchar2(1000) not null,
+    regDate Date default sysdate,
+    modDate Date default sysdate,
+    readCount number default 0,
+    recommendCount number default 0,
+    replyCount number default 0
+);
+alter table andamiroBoard add constraint PK_bno
+primary key(bno);
+
+-- andamiro reply table: boardReply --
+create table boardReply (
+    rno number(10,0),
+    bno number(10,0) not null,
+    reply varchar2(1000) not null,
+    replyer varchar2(50) not null,
+    replyDate date default sysdate,
+    modDate date default sysdate,
+    recommendCount number default 0
+);
+alter table boardReply add constraint PK_rno primary key (rno);
+
+--시퀀스
+CREATE SEQUENCE member_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE recipeid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE recipedetailid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE ingreid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE orderid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE picid_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE reviewnum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE  dietNum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE   subNum_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE   dietDetailID_seq START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE seq_bno START WITH 1 INCREMENT BY 1 nocache;
+CREATE SEQUENCE seq_reply START WITH 1 INCREMENT BY 1 nocache;
+
+
+
+
+insert into recipekind values(01 , '한식');
+insert into recipekind values(02 , '일식');
+insert into recipekind values(03 , '양식');
+insert into recipekind values(04 , '중식');
+insert into recipekind values(99 , '기타');
+
+insert into recipehow values(1,'볶음');
+insert into recipehow values(2,'튀김');
+insert into recipehow values(3,'삶기');
+insert into recipehow values(4,'끓이기');
+insert into recipehow values(5,'굽기');
+insert into recipehow values(6,'찜');
+insert into recipehow values(99,'기타');
+
+insert into recipemainingre values(1,'돼지고기');
+insert into recipemainingre values(2,'소고기');
+insert into recipemainingre values(3,'닭고기');
+insert into recipemainingre values(4,'육류');
+insert into recipemainingre values(5,'해물');
+insert into recipemainingre values(99,'기타');
+
+insert into boardCategory values(01, 'free');
+insert into boardCategory values(02, 'question');
+insert into boardCategory values(03, 'pairing');
+insert into boardCategory values(04, 'restaurant');
+insert into boardCategory values(05, 'ingredient');
+insert into boardCategory values(99, 'etc.');
+
+insert into andamiroBoard (cno, bno, title, writer, content) values (01, seq_bno.nextval, '안녕하세요', '첫 글입니다.', '해솔' );
+insert into boardReply (rno, bno, reply, replyer) values(seq_reply.nextval, 15, 'good!!', 'user00');
+commit;
+
+
+
+--참조 보류 --
+alter table andamiroBaord add constraint FK_cno
+FOREIGN KEY (cno) REFERENCES boardCategory(cno);
+
+alter table boardReply add constraint FK_bno
+foreign key (bno) references boardReply(bno);

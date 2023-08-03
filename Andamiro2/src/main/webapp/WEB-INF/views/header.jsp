@@ -57,10 +57,10 @@ a {
 						<a href='<c:url value="/diet/recDiet"/>' class="nav-link link-dark px-2">식단</a>
 					</li>													
 					<li class="nav-item">
-						<a href="<c:url value="/EventServlet?command=EventMainViewForm"/>" class="nav-link link-dark px-2">이벤트</a>
+						<a href="<c:url value="/Event_main"/>" class="nav-link link-dark px-2">이벤트</a>
 					</li>
 					<li class="nav-item">
-						<a href='<c:url value="/subscribe/subscribe"/>'					
+						<a href='<c:url value="/subscribe/subscribe"/>'			S		
 					 class="nav-link link-dark px-2">구독</a>
 				</ul>
 				<div class="text-end">

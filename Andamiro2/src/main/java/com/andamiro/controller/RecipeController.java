@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -156,8 +157,110 @@ public class RecipeController {
 	}
 	
 	@GetMapping("recipe_detail")
-	public void recipe_detail_get(@RequestParam("recipeId") int recipeId) {
-		RecipeDTO recipeDTO = recipeService.selectOneRecipeByRecipeId(recipeId);
-		System.out.println(recipeDTO);
+	public void recipe_detail_get(@RequestParam("recipeId") int recipeId, Model model) {
+	    RecipeDTO recipeDTO = recipeService.selectOneRecipeByRecipeId(recipeId);
+	    System.out.println(recipeDTO);
+
+	    List<String> ingreList = new ArrayList<String>();
+	    if (recipeDTO.getRecipeIngreVO() != null) {
+	        RecipeIngreVO recipeIngreVO = recipeDTO.getRecipeIngreVO();
+	        for (int i = 1; i <= 12; i++) {
+	            String ingredient = getIngredientValue(recipeIngreVO, i);
+	            if (ingredient != null) {
+	                ingreList.add(ingredient);
+	            }
+	        }
+	    }
+	    RecipePicVO recipePicVO = recipeDTO.getRecipePicVO();
+		List<String> recipePicList = new ArrayList<>();
+		if (recipePicVO != null) {
+			for (int i = 1; i <= 5; i++) {
+				String recipePicture = getPictureValue(recipePicVO, i);
+				if (recipePicture != null) {
+					recipePicList.add(recipePicture);
+				}
+			}
+		}
+
+		RecipeOrderVO recipeOrderVO = recipeDTO.getRecipeOrderVO();
+		List<String> recipeOrderList = new ArrayList<>();
+		if (recipeOrderVO != null) {
+			for (int i = 0; i <= 5; i++) {
+				String recipeOrder = getOrderValue(recipeOrderVO, i);
+				if (recipeOrder != null) {
+					recipeOrderList.add(recipeOrder);
+				}
+			}
+		}
+	    
+	    model.addAttribute("recipe", recipeDTO);
+	    model.addAttribute("ingreList", ingreList);
+	    model.addAttribute("recipeOrderList", recipeOrderList);
+	    model.addAttribute("recipePicList", recipePicList);
+	}
+	
+	private String getOrderValue(RecipeOrderVO recipeOrderVO, int i) {
+		switch (i) {
+		case 1:
+			return recipeOrderVO.getOrder1();
+		case 2:
+			return recipeOrderVO.getOrder2();
+		case 3:
+			return recipeOrderVO.getOrder3();
+		case 4:
+			return recipeOrderVO.getOrder4();
+		case 5:
+			return recipeOrderVO.getOrder5();
+		default:
+			return null;
+		}
+	}
+
+	private String getPictureValue(RecipePicVO recipePicVo, int i) {
+		switch (i) {
+		case 1:
+			return recipePicVo.getPic1();
+		case 2:
+			return recipePicVo.getPic2();
+		case 3:
+			return recipePicVo.getPic3();
+		case 4:
+			return recipePicVo.getPic4();
+		case 5:
+			return recipePicVo.getPic5();
+		default:
+			return null;
+		}
+	}
+
+	private String getIngredientValue(RecipeIngreVO recipeIngreVO, int i) {
+		switch (i) {
+		case 1:
+			return recipeIngreVO.getIngre1();
+		case 2:
+			return recipeIngreVO.getIngre2();
+		case 3:
+			return recipeIngreVO.getIngre3();
+		case 4:
+			return recipeIngreVO.getIngre4();
+		case 5:
+			return recipeIngreVO.getIngre5();
+		case 6:
+			return recipeIngreVO.getIngre6();
+		case 7:
+			return recipeIngreVO.getIngre7();
+		case 8:
+			return recipeIngreVO.getIngre8();
+		case 9:
+			return recipeIngreVO.getIngre9();
+		case 10:
+			return recipeIngreVO.getIngre10();
+		case 11:
+			return recipeIngreVO.getIngre11();
+		case 12:
+			return recipeIngreVO.getIngre12();
+		default:
+			return null;
+		}
 	}
 }

@@ -31,6 +31,7 @@ label[for=name] button {
 </head>
 <body>
 
+	
 	<jsp:include page="../header.jsp"></jsp:include>
 
 
@@ -41,7 +42,7 @@ label[for=name] button {
 		<div style="text-align: center;">
 
 
-			<img src="resources/img/${eventvo.poster}" width="60%" height="auto"
+			<img src="#" width="60%" height="auto"
 				role="img" aria-label="베너" />
 			<hr />
 
@@ -54,7 +55,7 @@ label[for=name] button {
 
 
 
-	<jsp:include page="../footer.jsp"></jsp:include>
+<jsp:include page="../header.jsp"></jsp:include>
 </body>
 
 </html>

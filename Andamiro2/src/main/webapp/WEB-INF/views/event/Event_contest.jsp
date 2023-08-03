@@ -30,7 +30,7 @@ label[for=name] button {
 </head>
 <body>
 
-	<jsp:include page="../header.jsp"></jsp:include>
+<jsp:include page="../header.jsp"></jsp:include>
 
 
 	<div class="container">
@@ -41,10 +41,10 @@ label[for=name] button {
 		<br>
 <div class="container">
     <div style="text-align: center;">
-        <img src="resources/img/${gang.poster}" width="60%" height="auto" role="img" aria-label="베너" />
+        <img src="#" width="60%" height="auto" role="img" aria-label="베너" />
         <hr />
 
-       <button type="button" class="btn btn-warning btn-lg-3" onclick="location.href='EventServlet?command=contest_recipewrite'">참여하기</button>
+       <button type="button" class="btn btn-warning btn-lg-3" onclick="/">참여하기</button>
         <button type="button" class="btn btn-warning btn-lg-3">공유하기</button>
     </div>
 </div>
@@ -55,7 +55,8 @@ label[for=name] button {
 	<br>
 	<div class="album py-5 bg-light">
 		<div class="container">
-			<a href="EventServlet?command=contest_moreview">
+			<a href="#">
+
 				<button type="button" class="btn btn-light   style=" color:
 					black; border-radius: 1px; text-align:start; font-weight: 200;">
 					<b style="font-size: 18px;">다른 참여자 레시피 보러가기!!</b>
@@ -128,7 +129,7 @@ label[for=name] button {
 	</div>
 	</bottom>
 
-	<jsp:include page="../footer.jsp"></jsp:include>
+<jsp:include page="../footer.jsp"></jsp:include>
 
 
 

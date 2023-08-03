@@ -6,7 +6,7 @@
 	<footer class="my-3 py-2" style="background-color: #fac279;">
 		<div class="container">
 			<div class="text-center">
-				<img src="../resources/img/mainlogo.png" class="img-fluid" style="height: 5rem;">
+				<img src="/resources/img/mainlogo.png" class="img-fluid" style="height: 5rem;">
 			</div>
 			<div class="text-center">
 				<ul>
