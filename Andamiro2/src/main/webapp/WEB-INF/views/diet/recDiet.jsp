@@ -36,6 +36,8 @@
 	}
 </style>
 </head>
+
+
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 <div class="container border mt-3 rounded-3 w-50">
