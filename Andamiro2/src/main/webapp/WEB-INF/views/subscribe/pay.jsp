@@ -57,10 +57,7 @@
     	    alert("약관동의를 체크해주세요.");
     	    return false;
     	} 
-    	if(${not empty loginUser.subscribe}){
-    		alert("이미 구독중인 회원 입니다.");
-    		return false;
-    	}
+    	
     	return true;
       }
     
@@ -71,7 +68,7 @@
        	IMP.request_pay({
        		pg: "kakao",
        	    pay_method: "kakaopay",
-    	    merchant_uid: "order_no"+memberNumber,
+    	    merchant_uid: "order_no" + new Date().getTime(),
     	    name : '안다미로 구독 서비스',
     	    amount : 10,
     	    
@@ -94,6 +91,7 @@
     	  var token = $("meta[name='_csrf']").attr('content');
     	  var header = $("meta[name='_csrf_header']").attr('content');
    	 	  var username = '${loginUser.getUsername()}' ;  
+   	 	  console.log(username);
         $.ajax({
             url: '/subscribe/pay',
             type: 'post',

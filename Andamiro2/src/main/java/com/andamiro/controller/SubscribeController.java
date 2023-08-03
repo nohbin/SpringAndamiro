@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,8 @@ public class SubscribeController {
 	
 	private SubscribeService service;
 	
+	private UserDetailsService userDetilasService;
+	
     @GetMapping("/subscribe")
     public void subscribe() {
         
@@ -49,10 +52,8 @@ public class SubscribeController {
 
     @PostMapping("/pay")
     public String register(HttpServletRequest request, RedirectAttributes rttr, @RequestParam("username") String username) {
-    	HttpSession session = request.getSession();
-    	MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
-    	CustomUserDetailService cds = new CustomUserDetailService();
-    	CustomUserDetails user = (CustomUserDetails) cds.loadUserByUsername(username);
+    	System.out.println(username);
+    	CustomUserDetails user = (CustomUserDetails)userDetilasService.loadUserByUsername(username);
     	int status = 1;
     	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     	Date currentTime = new Date();
