@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	alert("구독 가입이 완료되었습니다.");
 	window.close();
-	window.opener.parent.location.href = 'main.jsp';
+	window.opener.parent.location.href = '/main';
 	
 </script>
 </body>

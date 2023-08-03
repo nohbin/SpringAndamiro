@@ -4,14 +4,17 @@
 <%@ page import="java.util.Calendar" %> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../resources/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="../resources/css/my.css">
+  <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/resources/css/my.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <style>
@@ -26,7 +29,18 @@
   </style>
   <title>결제창</title>
   <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script>
+ 
+ /*  var token = $("meta[name='_csrf']").attr('content');
+  var header = $("meta[name='_csrf_header']").attr('content');
+  	$(function(){
+  	    if(token && header) {
+  	        $(document).ajaxSend(function(event, xhr, options) {
+  	            xhr.setRequestHeader(header, token);
+  	        });
+  	    } */
+
     function closePopup(){
       window.close();
     }
@@ -51,15 +65,6 @@
       }
     
     function requestPay(){
-    	
-    	//카드 결제 api
-//     	IMP.init('imp17333063');
-//     	var memberNumber = ${loginUser.memberNumber};
-//     	IMP.request_pay({
-//     		pg : "html5_inicis", 
-//     	    pay_method : "card",
-
-		// 카카오 결제 api
    	    const userCode = "imp38388127";
 		IMP.init(userCode);
        	var memberNumber = ${loginUser.memberNumber};
@@ -69,18 +74,48 @@
     	    merchant_uid: "order_no"+memberNumber,
     	    name : '안다미로 구독 서비스',
     	    amount : 10,
+    	    
     	}, function(rsp) { // callback 로직
 			if(rsp.success) {
 				var msg = '결제가 완료되었습니다.';
 				alert(msg);
-				window.location.href = "../SubscribeServlet?command=sub_join&userid=${loginUser.id}";
+				sendPayDataToServer(rsp);  // 결제 정보를 서버로 전송 */
+			
 			}else {
 				var msg = '결제에 실패하였습니다.'
 				msg += '오류 : ' + rsp.error_msg;
 				alert(msg);
 			}			  
     	});
+       	
     }
+    
+    function sendPayDataToServer(paymentData) { 
+    	  var token = $("meta[name='_csrf']").attr('content');
+    	  var header = $("meta[name='_csrf_header']").attr('content');
+   	 	  var username = '${loginUser.getUsername()}' ;  
+        $.ajax({
+            url: '/subscribe/pay',
+            type: 'post',
+            data: {username: username}, 
+            beforeSend : function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function(response) {
+            	alert("결제");
+            
+                console.log(response);
+                alert("구독 가입이 완료되었습니다");
+                window.close();
+                window.opener.parent.location.href = '/main'; 
+                /* window.location.href = "/main"; */
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+    
     
   </script> 
 </head>
