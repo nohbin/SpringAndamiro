@@ -46,10 +46,10 @@ a i {
 		<div class="container border my-3 rounded-5 text-center recipe-show">
 			<div class="container text-center mt-3 mb-3">
 				<div class="row row-cols-12">
-					<div class="col-12 mb-3 border-bottom h1 display-2">${recipe.recipeName }</div>
+					<div class="col-12 mb-3 border-bottom h1 display-2">${recipe.recipeVO.recipeName }</div>
 					<div class="col-12 mb-3 border-bottom h3 display-5">${recipe.recipeDetailVO.recipeDiscription }</div>
 					<div class="col-12 col-md-6">
-						<img src="/img/${recipe.mainPicture }" alt="" class="rounded-5 img-thumbnail">
+						<img src="/resources/upload/${recipe.recipePicVO.uploadPath }/${recipe.recipePicVO.mainPicture }" alt="" class="rounded-5 img-thumbnail">
 					</div>
 					<div class="col-12 col-md-6 align-self-center">
 						<div class="row" style="font-weight: 700; font-size: 2rem;">
@@ -67,7 +67,7 @@ a i {
 							<div class="title_ingre my-3" style="font-weight: 900; font-size: 2rem;">재료</div>
 							<div class="ready_ingre mt-3">
 								<ul class="row justify-content-between">
-									<c:forEach var="recipeingre" items="${recipeIngreList }">
+									<c:forEach var="recipeingre" items="${ingreList }">
 										<li class="col-5 border-bottom"><a class="float">${recipeingre }</a></li>
 									</c:forEach>
 								</ul>
@@ -83,7 +83,7 @@ a i {
 			</div>
 				<div class="d-flex justify-content-end">
 					<c:if test="${not empty loginUser.subscribe }">
-						<a href="SubscribeServlet?command=save_recipe&subNumber=${loginUser.subscribe }&recipeid=${recipe.recipeID}"> 
+						<a href="save"> 
 							<i class="bi bi-folder-plus"></i>
 						</a>
 					</c:if>
@@ -101,7 +101,7 @@ a i {
 								  	<c:if test="${st.index < recipePicList.size()}">
 										<c:set var="recipePic" value="${recipePicList.get(st.index)}" />
 										<div id="stepImg${st.index + 1}">
-											<i class="bi bi-${st.count}-square display-4 mb-5" style="color: orange"></i><br><img src="/img/${recipePic}" class="img-fluid img-thumbnail mt-3" style="width: 30rem;">
+											<i class="bi bi-${st.count}-square display-4 mb-5" style="color: orange"></i><br><img src="/resources/upload/${recipe.recipePicVO.uploadPath }/${recipePic}" class="img-fluid img-thumbnail mt-3" style="width: 30rem;">
 										</div>
 									</c:if>
 								</div>
@@ -139,7 +139,6 @@ a i {
 								<td>${review.review}</td>  
 								<td>${review.recipegrade }</td>
 								<td><img src="/img/${review.img}" class="rounded-3 img-thumbnail" style=" width: 5rem;"></td>
-								
 							</tr>
 						</c:forEach>
 						</table>
@@ -155,9 +154,9 @@ a i {
 				</c:if>
 				<!-- 모달 -->
 			<form action="ReviewServlet?command=review_write" method="post" enctype="multipart/form-data">
-            	<input type="hidden" name="memberId" value="${loginUser.id }">
-            	<input type="hidden" name="recipeid" value="${recipe.recipeID}">
-            	<input type="hidden" name="recipename" value="${recipe.recipeName }">
+            	<input type="hidden" name="memberId" value="${loginUser.getUsername() }">
+            	<input type="hidden" name="recipeid" value="${recipe.recipeVO.recipeId}">
+            	<input type="hidden" name="recipename" value="${recipe.recipeVO.recipeName }">
 				<div class="modal fade" id="staticBackdrop"
 					data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 					aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -165,7 +164,7 @@ a i {
 						<div class="modal-content">
 							<div class="modal-header">
 								<h1 class="modal-title fs-5" id="staticBackdropLabel">
-									<b>작성자 : [${loginUser.id }] 님</b>
+									<b>작성자 : [${loginUser.getUsername() }] 님</b>
 								</h1>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
