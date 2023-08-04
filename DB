@@ -122,7 +122,7 @@ CREATE TABLE recipeOrder (
   order5 VARCHAR(255)
 );
 
---리뷰 테이블
+-- 리뷰 테이블
 CREATE TABLE andamiroreview (
   reviewnum NUMBER(20) PRIMARY KEY,
   recipeid number NOT NULL,
@@ -131,7 +131,7 @@ CREATE TABLE andamiroreview (
   review VARCHAR2(255),
   recipegrade VARCHAR2(255),
   regdate DATE DEFAULT SYSDATE,
-  id VARCHAR2(255)
+  usernumber number
 );
 
 
