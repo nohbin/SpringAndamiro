@@ -25,5 +25,6 @@ public interface BoardMapper {
 	public void updateReplyCount(@Param("bno") Long bno, @Param("amount") int amount); 	/*MyBatis의 SQL을 처리하기 위해서는 기본적으로 하나의 파라미터 타입을 사용하기 때문에
 																							위와 같이 2개 이상의 데이터를 전달하려면 @Param이라는 어노테이션을 이용해서 처리할 수 있습니다. */
 	public int getTotalCount(Criteria cri);
-	// 마찬가지?ㅇ
+//	public int getTotalCount(@Param("cri") Criteria cri, @Param("cno") String cno);
+
 }

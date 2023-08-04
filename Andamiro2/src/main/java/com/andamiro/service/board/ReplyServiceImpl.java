@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.andamiro.domain.board.BoardVO;
 import com.andamiro.domain.board.Criteria;
 import com.andamiro.domain.board.ReplyPageDTO;
 import com.andamiro.domain.board.ReplyVO;
@@ -59,5 +60,17 @@ public class ReplyServiceImpl implements ReplyService {
 	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
 		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
-
+	
+	@Transactional
+	@Override
+	public Long recommend(Long rno) {
+		mapper.updateRecommendCount(rno);
+		ReplyVO reply = mapper.read(rno);
+		Long result = reply.getRecommendCount();
+		return result;
+	}
+	
+	
+	
+	
 }

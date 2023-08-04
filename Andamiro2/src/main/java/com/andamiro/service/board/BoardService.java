@@ -13,6 +13,7 @@ public interface BoardService {
 
 	public List<BoardVO> getListTemp();
 	public List<BoardVO> getListWithPaging(Criteria cri);
+//	public List<BoardVO> getListWithPaging(Criteria cri, String cno);
 	
 	public int register(BoardVO board);
 	public BoardVO read(Long bno);
@@ -20,6 +21,7 @@ public interface BoardService {
 	public boolean delete(Long bno);
 	
 	public int getTotalCount(Criteria cri);
+//	public int getTotalCount(Criteria cri, String cno);
 	public Long recommend(Long bno);
 
 	

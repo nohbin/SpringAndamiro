@@ -90,6 +90,10 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotalCount(Criteria cri) {
 		return mapper.getTotalCount(cri);
 	}
+//	@Override
+//	public int getTotalCount(Criteria cri, String cno) {
+//		return mapper.getTotalCount(cri, cno);
+//	}
 	@Transactional
 	@Override
 	public Long recommend(Long bno) {

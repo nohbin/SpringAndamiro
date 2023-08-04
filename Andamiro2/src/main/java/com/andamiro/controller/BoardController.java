@@ -42,6 +42,18 @@ public class BoardController {
 		model.addAttribute("list", service.getListWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
+//	
+//	@GetMapping("/list/{cno}")
+//	public void list(Criteria cri, Model model, @PathVariable("cno") String cno) {
+//		int total = service.getTotalCount(cri, cno);
+//		model.addAttribute("list", service.getListWithPaging(cri, cno));
+//		model.addAttribute("pageMaker", new PageDTO(cri, total));
+//	}
+	
+	
+	
+	
+	
 	@GetMapping("/register")
 	public void register() {}
 
