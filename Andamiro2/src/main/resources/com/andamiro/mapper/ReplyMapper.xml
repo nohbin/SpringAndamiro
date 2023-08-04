@@ -34,4 +34,10 @@
 	select count(rno) from boardReply where bno = #{bno}
 	]]>
 </select>
+	<update id="updateRecommendCount">
+		update boardReply 
+			set recommendCount = (recommendCount + 1)
+			where rno = #{rno} 
+	</update>
+	
 </mapper>

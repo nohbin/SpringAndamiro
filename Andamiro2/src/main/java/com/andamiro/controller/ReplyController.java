@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andamiro.domain.board.Criteria;
@@ -31,8 +32,6 @@ public class ReplyController {
 	@PostMapping(value="/new", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
 		int insertCount = service.register(vo);
-		log.info("ReplyVO? " + vo + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		log.info("insertCount? " + insertCount + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		return insertCount ==1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 //	@GetMapping(value = "/pages/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -44,27 +43,22 @@ public class ReplyController {
 //	}
 	@GetMapping(value = "/pages/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
-		log.info("getList...................");
 		Criteria cri = new Criteria(page, 10);
-		log.info(cri);
 		return new ResponseEntity<>(service.getListPage(cri,  bno), HttpStatus.OK);
 	}
 	@GetMapping(value="/{rno}", produces={ MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno) {
-		log.info("get : " + rno);
 		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
 	}
 	@DeleteMapping(value="/{rno}", produces= { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
 		int result = service.remove(rno);
 		ResponseEntity<String> rsEt = null;
-		log.info("[controller]remove result???..........................." + result);
 		if(result == 1) {
 			rsEt = new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
 			rsEt = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		log.info("ResponseEntity??????????????........................." + rsEt);
 		return rsEt;
 
 //		return result == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,7 +69,12 @@ public class ReplyController {
 		vo.setRno(rno);
 		return service.modify(vo) ==1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{rno}", consumes="application/json", produces={ MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Long> recommend(@PathVariable("rno") Long rno) {
+		System.out.println(rno);
+		Long result = service.recommend(rno);
+		return result != 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 
 }

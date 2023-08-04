@@ -7,6 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 	<title> Board List </title>
+	<style>
+		.header, .panel-heading, .flex {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -82,7 +88,9 @@
 			<div class="panel-heading">
 				<i class="fa fa-comments fa-fw"></i> Reply
 				<button id="addReplyBtn" class='btn btn-primary btn-xs pull-right'>New Reply</button>
+				
 			</div>
+			<hr>
 			<div class="panel-body">
 				<ul class="chat">
 					<li class="left clearfix" data-rno="12">
@@ -112,10 +120,10 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>Reply</label>		<input class="form-control" name="reply" value="New Reply!!!!"></input>
+					<label>Replyer</label>		<input class="form-control" name="replyer" value="a replyer!!!"></input>
 				</div>
 				<div class="form-group">
-					<label>Replyer</label>		<input class="form-control" name="replyer" value="a replyer!!!"></input>
+					<label>Reply</label>		<input class="form-control" name="reply" value="New Reply!!!!"></input>
 				</div>
 				<div class="form-group">
 					<label>Reply Date</label>	<input class="form-control" name="replyDate" value=""></input>
@@ -137,10 +145,42 @@
 
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-console.log(token + "/" + header);
+function recommend(bno, callback, error) {
+	$.ajax({
+		type : 'put',
+		async: false,
+		url : '/board/recommend/'+bno,
+		contentType : "application/json; charset=utf-8",
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(result, status, xhr) {
+			if (callback) {
+				callback(result);
+			}
+		},
+		error : function(xhr, status, er) {
+			if (error) {
+				error(er);
+			}
+		}
+	});
+}
+function replyUp(event) {
+	event.stopPropagation();
+	var rnoValue = event.currentTarget.value; // 자식 요소를 클릭해도 이벤트가 달린 요소를 타깃으로 한다.
+	console.log(event.currentTarget);
+	replyService.recommendReply(rnoValue
+			, function(result){
+				alert("추천하셨습니다.");
+				$('span[value="'+ rnoValue + '"]').html(result);
+			}, function(er) {
+				console.log("왜 때문에 되다 안되다 하는거지요?"); // rnoValue를 못 받아오는 문제였다. 알고보니 버튼 안의 스팬태그가 클릭되는 경우 안됐었으
+			}
+	);
+}
 var replyService = (function() {
 	function add(reply, callback, error) {
-		// console.log("add reply..................");
 		$.ajax({
 			type : 'post',
 			url : '/replies/new',
@@ -168,6 +208,7 @@ var replyService = (function() {
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 				function(data) {
 					if(callback) {
+						console.log(data);
 						callback(data.replyCount, data.list);
 					}
 		}).fail (function(xhr, status, err) {
@@ -217,6 +258,27 @@ var replyService = (function() {
 			}
 		});
 	}
+	function recommendReply(rno, callback, error) {
+		$.ajax({
+			type : 'put',
+			async: false,
+			url : '/replies/recommend/'+rno,
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(header, token);
+			},
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});
+	}
 	function get(rno, callback, error) {
 		$.get("/replies/" + rno + ".json", function(result) {
 			if(callback) {
@@ -245,19 +307,22 @@ var replyService = (function() {
 			return [yy, '/', (mm>9?'':'0') + mm, (dd>9?'':'0') + dd].join('');
 		}
 	}
+
 	return {
 		add : add,
 		getList : getList,
 		remove : remove,
 		update : update,
+		recommendReply : recommendReply,
 		get : get,
 		displayTime : displayTime
-	};// add라는 이름의 속성으로 값은 add라는 function을 가지는 replyService객체가 된다.!!
+	};
 })();
 
 
 	/////////////////////////////////////////////////////////////////////
 	$(document).ready(function() {
+
 		
 		
 		var bnoValue = '<c:out value="${board.bno}"/>';
@@ -273,17 +338,16 @@ var replyService = (function() {
 		var modalModifyBtn = $('#modalModifyBtn');
 		var modalRemoveBtn = $('#modalRemoveBtn');
 		var modalRegisterBtn = $('#modalRegisterBtn');
+		var modalCloseBtn = $('#modalCloseBtn');
 		
 		showList(1);
 		
 		
-		
+
 		
 		
 		function showReplyPage(replyCount) {
-			console.log("pageNum : " + pageNum);
-			console.log("replyCount : " + replyCount);
-			
+	
 			var endNum = Math.ceil(pageNum / 10.0)*10;
 			var startNum = endNum -9;
 			
@@ -311,16 +375,9 @@ var replyService = (function() {
 			replyPageFooter.html(str);
 		}	
 		
-		
-		
-		
-		
-		
 		replyPageFooter.on("click", "li a", function(e) {
 			e.preventDefault();
-			console.log("page click");
 			var targetPageNum = $(this).attr("href");
-			console.log("targetPageNum: " + targetPageNum);
 			pageNum = targetPageNum;
 			showList(pageNum);
 		});
@@ -339,9 +396,16 @@ var replyService = (function() {
 				}
 				for (var i = 0, len = list.length || 0 ; i<len; i++) {
 					str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
-					str += "	<div><div class='header'><strong class='primary-font'>" + list[i].replyer + "</strong>";
-					str += "			<small class='pull-right text-muted'>" + replyService.displayTime(list[i].replyDate) + "</small></div>";
-					str += "		<p>" + list[i].reply + "</p></div></li>";
+					str += "	<div>";
+					str += "		<div class='header'>";
+					str += "			<strong class='primary-font'>" + list[i].replyer + "</strong>";
+					str += "			<button value='" + list[i].rno + "' class='btn btn-outline-secondary' onclick='replyUp(event);'><img src='/resources/img/recommend.png' height='20px'> &nbsp;<span value='" + list[i].rno + "'>" + list[i].recommendCount + "<span></button></div>";
+					str += "		<p>" + list[i].reply + "</p>";
+					str += "		<p class='flex'>";
+					str += "			<small class='text-muted'>" + replyService.displayTime(list[i].replyDate) + " | <a>덧글</a></small>";
+// 					str += "			<button class='btn btn-outline-secondary'><img src='/resources/img/rereply.png' height='15px'></button></p>";			
+					str += "	</div>";
+					str += "</li><hr>";
 				}
 				replyUL.html(str);
 				showReplyPage(replyCount); //추가됨
@@ -356,10 +420,10 @@ var replyService = (function() {
 			$('.modal').modal('show');
 		});	
 		
-		
+
+
 		$('.chat').on('click', 'li', function(e) {
 			var rno = $(this).data('rno');
-			console.log(rno); // 각각의 댓글(각각의 li)을 클릭했을 때 콘솔창에 rno번호를 뿌린다.
 			replyService.get(rno, function(reply){
 				modalInputReply.val(reply.reply);
 				modalInputReplyer.val(reply.replyer);
@@ -373,7 +437,7 @@ var replyService = (function() {
 				$('.modal').modal('show');
 			});
 		});
-		
+
 		modalRegisterBtn.on("click", function(e) {
 			var reply = {
 					reply: modalInputReply.val(),
@@ -409,43 +473,10 @@ var replyService = (function() {
 				showList(pageNum);
 			});
 		});
+		modalCloseBtn.on("click", function(e){
+			modal.modal("hide");
+		});
 	
-		
-	});
-
-function recommend(bno, callback, error) {
-	$.ajax({
-		type : 'put',
-		url : '/board/recommend/'+bno,
-		data : JSON.stringify(board),
-		contentType : "application/json; charset=utf-8",
-		beforeSend : function(xhr){
-			xhr.setRequestHeader(header, token);
-		},
-		success : function(result, status, xhr) {
-			if (callback) {
-				callback(result);
-			}
-		},
-		error : function(xhr, status, er) {
-			if (error) {
-				error(er);
-			}
-		}
-	});
-}
-function refreshRecommendCount() {
-	var bno = param.bno;
-	$.getJSON("/board/get?bno=" + bno + ".json", function(data) {
-				if(callback) { callback(data.recommendCount); }
-	}).fail (function(xhr, status, err) {
-		if(error) { error(); }
-	});
-}
-				
-	//////////////////////////////////////////////////////////////////////
-	$(document).ready(function() {
-		var bnoValue = '${board.bno}';
 		var operForm = $("#operForm");
 		
 		$("button[data-oper='modify']").on("click", function(e) {
@@ -461,15 +492,17 @@ function refreshRecommendCount() {
 		$('button[data-oper="recommend"]').on('click', function(e) {
 			recommend(bnoValue
 				, function(result){
-					alert(result);
-					var newRecommendCount = refreshRecommendCount();
-					$('#recommendCount').html(newRecommendCount);
+					alert("추천하셨습니다.");
+					$('#recommendCount').html(result);
 				}, function(er) {
 					console.log("진짜로 잘 모르겠다구요,....");
 				}
 			);
 		});
 	});
+
+
+
 </script>
 <jsp:include page="../footer.jsp"></jsp:include> 
 </body>

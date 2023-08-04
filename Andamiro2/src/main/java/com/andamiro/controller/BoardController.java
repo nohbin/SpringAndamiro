@@ -1,5 +1,8 @@
 package com.andamiro.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +42,18 @@ public class BoardController {
 		model.addAttribute("list", service.getListWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
+//	
+//	@GetMapping("/list/{cno}")
+//	public void list(Criteria cri, Model model, @PathVariable("cno") String cno) {
+//		int total = service.getTotalCount(cri, cno);
+//		model.addAttribute("list", service.getListWithPaging(cri, cno));
+//		model.addAttribute("pageMaker", new PageDTO(cri, total));
+//	}
+	
+	
+	
+	
+	
 	@GetMapping("/register")
 	public void register() {}
 
@@ -91,8 +106,9 @@ public class BoardController {
 	
 	}
 	@ResponseBody
-	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{bno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> recommend(@PathVariable("bno") Long bno) {
-		return service.recommend(bno) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/recommend/{bno}", consumes="application/json", produces={ MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Long> recommend(@PathVariable("bno") Long bno) {
+		Long result = service.recommend(bno);
+		return result != 0 ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
