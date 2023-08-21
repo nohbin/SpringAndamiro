@@ -60,10 +60,10 @@ a {
 						<a href="<c:url value="/Event_main"/>" class="nav-link link-dark px-2">이벤트</a>
 					</li>
 					<li class="nav-item">
-						<a href='<c:url value="/subscribe/subscribe"/>'			S		
+						<a href='<c:url value="/subscribe/subscribe"/>'		
 					 class="nav-link link-dark px-2">구독</a>
 					<li class="nav-item">
-						<a href='<c:url value="/board/list"/>'					
+						<a href='<c:url value="/board/list?cno=01"/>'					
 					 class="nav-link link-dark px-2">게시판</a>
 				</ul>
 				<div class="text-end">

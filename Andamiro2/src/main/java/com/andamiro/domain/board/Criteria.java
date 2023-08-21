@@ -12,6 +12,7 @@ public class Criteria {
    private int amount;   
    private String type;
    private String keyword;
+   private int cno; /* 추가된 항목 */
 
    public Criteria() {
       this(1,10);

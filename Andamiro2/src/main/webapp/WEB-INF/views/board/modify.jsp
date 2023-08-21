@@ -29,6 +29,8 @@ ${cri.pageNum}
 					<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>' /> 
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+					<input type='hidden' name='cno' value='<c:out value="${cri.cno}"/>' />
+					
 					<div class="form-group">
 						<label>No.</label> 
 						<input class="form-control" name="bno" value="<c:out value='${board.bno}'/>" readonly="readonly">
