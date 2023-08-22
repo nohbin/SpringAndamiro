@@ -8,7 +8,7 @@
 		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
 				<trim prefix="OR">
-					<choose> <!-- choose,when...중복 선택이 가능한가보다. -->
+					<choose>
 						<when test="type == 'T'.toString"> <!-- Criteria.keyword...getTotalCount에서도 필요하다. -->
 							title like '%'||#{keyword}||'%'
 						</when>
@@ -31,7 +31,7 @@
 		select /*+INDEX_DESC(andamiroBoard PK_bno) */ * from andamiroBoard
 	</select>
 	<select id="getListWithPaging" resultType="com.andamiro.domain.board.BoardVO"><!-- ========================================================================================================================-->
-		  <![CDATA[
+		  
 			select *
 			from 
 				(
@@ -39,7 +39,9 @@
 					rownum rn, cno, bno, title, content, writer, regDate, modDate, readCount, recommendCount, replyCount
 					from andamiroBoard
 					where 
-			]]>
+			<if test="#{cno} != null">cno=#{cno} and </if>
+					
+			
 			<include refid="criteria"></include>
 		  	<![CDATA[
 					rownum <= #{pageNum} * #{amount}
@@ -49,9 +51,10 @@
 	</select>
 		
 	<select id="getTotalCount" resultType="int"><!-- ========================================================================================================================-->
-		select count(*) from andamiroBoard
-		where 
-		<include refid="criteria"></include>
+		select count(*) from andamiroBoard 
+		where
+			<if test="#{cno} != null">cno=#{cno} and </if>
+			<include refid="criteria"></include>
 		<![CDATA[bno>0]]>
 	</select>
 	

@@ -50,40 +50,47 @@
 	<jsp:include page="../header.jsp"></jsp:include>
 
 	<div class="container border mt-3 rounded-3 w-50">
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Board Register</h1>
+		<div class="col col-11 d-inline float-left mt-3 mb-3">
+				<h1 class="page-header float-left">
+					<c:choose>
+						<c:when test="${cri.cno == 01}">자유 게시판</c:when>
+						<c:when test="${cri.cno == 02}">질문 게시판</c:when>
+						<c:when test="${cri.cno == 03}">페어링 이야기</c:when>
+						<c:when test="${cri.cno == 04}">식당 이야기</c:when>
+						<c:when test="${cri.cno == 05}">식재료 이야기</c:when>
+
+					</c:choose>
+				</h1>
 			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">매너를 지켜주세요!!!</div>
+					<div class="panel-heading"><small>게시판 매너를 준수합시다.</small></div>
 					<div class="panel-body">
 						<form role="form" action="/board/register" method="post">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							<input type='hidden' name='type' value='<c:out value="${cri.type}"   />'>
+							<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'> 
+							<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'> 
+							<input type='hidden' name='amount' value='<c:out value="${cri.amount}" />'> 
+							<input type='hidden' name='cno' value='<c:out value="${cri.cno}"/>' />
 							<div class="form-group">
-								<label>Title</label> <input class="form-control" name="title"
-									placeholder="제목">
+								<label>Title</label> <input class="form-control" name="title" placeholder="제목">
 							</div>
 
 							<div class="form-group">
 								<label>Content</label>
-								<textarea class="form-control" rows="10" name="content"
-									placeholder="내용"></textarea>
+								<textarea class="form-control" rows="10" name="content" placeholder="내용"></textarea>
 							</div>
 
 							<div class="form-group">
-								<label>Writer</label> <input class="form-control" name="writer"
-									placeholder="작성자">
+								<label>Writer</label> <input class="form-control" name="writer" placeholder="작성자">
 							</div>
 
 							<br>
-							<button type="submit" class="btn btn-default">Submit
-								Button</button>
-							<button type="reset" class="btn btn-default">Reset
-								Button</button>
+							<button type="submit" class="btn btn-outline-secondary btn-xs mb-10">Submit</button>
+							<button type="reset" class="btn btn-outline-secondary btn-xs mb-10">Reset</button>
 						</form>
 					</div>
 					<!-- /.panel-body -->

@@ -1,7 +1,6 @@
 package com.andamiro.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,31 +33,33 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	private BoardService service;
 	
+//	@GetMapping("/list")
+//	public void list(Criteria cri, Model model) {
+//		int total = service.getTotalCount(cri);
+//		model.addAttribute("list", service.getListWithPaging(cri));
+//		model.addAttribute("pageMaker", new PageDTO(cri, total));
+//	}
+	
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
-		System.out.println("과연~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+cri);
+	public void list(Criteria cri, Model model, @ModelAttribute("cno") String cno) {
+		cri.setCno(Integer.parseInt(cno));
 		int total = service.getTotalCount(cri);
-		System.out.println("totalCount??" + total);
+
 		model.addAttribute("list", service.getListWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-//	
-//	@GetMapping("/list/{cno}")
-//	public void list(Criteria cri, Model model, @PathVariable("cno") String cno) {
-//		int total = service.getTotalCount(cri, cno);
-//		model.addAttribute("list", service.getListWithPaging(cri, cno));
-//		model.addAttribute("pageMaker", new PageDTO(cri, total));
-//	}
 	
 	
 	
 	
 	
 	@GetMapping("/register")
-	public void register() {}
+	public void register(@ModelAttribute("cri") Criteria cri, Model model) {
+		model.addAttribute("cri", cri);
+	}
 
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) { //인풋태그로부터 파라미터 수집.
+	public String register(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) { //인풋태그로부터 파라미터 수집.
 //		log.info("==================================================");
 //		log.info("register : " + board);
 //		if(board.getAttachList() != null) {
@@ -68,7 +69,11 @@ public class BoardController {
 		
 		service.register(board);
 		rttr.addFlashAttribute("result", board.getBno());
-		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("cno", cri.getCno());
 		return "redirect:/board/list";
 	}
 
