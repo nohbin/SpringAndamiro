@@ -1,0 +1,134 @@
+.container{ 
+  padding-top: 30px;
+  margin: 0 auto;
+  height: 700px;  /*1200*/
+}
+.contentbox{
+  width: 100%;
+  margin: 0 auto;
+  height: 700px;
+
+}
+.paybox{
+  margin: 0 auto;
+  width: 50%;
+
+}
+.pay1{
+  text-align: center;
+  border: 1px solid  #f5b92f ;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+
+}
+
+.pay1_1{
+  background-color: #ffcc23dc;
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5px 10px 10px 5px;
+  border-radius: 10px;
+}
+.pay1_2{
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.buy_box{
+  margin: 0 auto;
+  width: 60%;
+  margin-top: 50px;
+}
+.buy{
+  background-color: #ffcc23dc;
+  width: 30%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.buy_ment{
+  border: 1px solid  #f5b92f ;
+  padding: 10px 15px 15px 10px;
+  line-height: 25px;
+
+}
+.pay_box{
+  margin: 0 auto;
+  width: 60%;  
+  margin-top: 50px;
+}
+.pay2{
+  background-color: #ffcc23dc;
+  width: 30%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.way{
+  display: inline-block;
+  
+}   
+.way img{
+  width: 120px;
+  height: 80px;
+}
+#img1{
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.term_box{
+  margin: 0 auto;
+  width: 70%;  
+  margin-top: 50px;
+}
+.term{
+  background-color: #ffcc23dc;
+  width: 20%;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.btnbox{
+  margin: 0 auto;
+  width: 80%;  
+  margin-top: 50px;
+}
+.cancel{
+  width: 30%;
+  margin-left: 40px;
+  margin-right: 80px;
+  margin-bottom: 50px;
+  text-align: center;
+  background-color: white;
+  border: 3px solid #bbb7b7;
+  font-size: 30px;
+  padding: 10px;
+  border-radius: 15px;
+  display: inline-block;
+}
+.pay_btn{
+  width: 30%;
+  text-align: center;
+  margin-bottom: 50px;
+  background-color: #fa921cd8 ;
+  border: 3px solid #bbb7b7;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 15px;
+  display: inline-block;
+}
+.pay_btn:hover{
+  color: white;
+}

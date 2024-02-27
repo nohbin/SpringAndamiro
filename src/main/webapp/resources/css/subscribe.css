@@ -1,0 +1,135 @@
+.container{ 
+  padding-top: 30px;
+  margin: 0 auto;
+  height: 1200px;
+}
+.contentbox{
+  width: 100%;
+  margin: 0 auto;
+  height: 1200px;
+
+}
+.ad{
+  background-color: #ffff6e;
+  text-align: center;
+  padding: 20px 10px 10px 10px;
+  line-height: 35px;
+  height: 160px;
+  width: 50%;
+  border-radius: 20px;
+  margin: 0 auto;
+  font-size: 1.5em;
+}
+.ad div{
+  margin-top: 10px;
+}
+ #sub_btn{
+  font-size: 1.0em;
+  padding: 5px 10px 10px 5px;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: white;
+  color: #db9616;
+}
+
+#sub_btn:hover{
+  color: white;
+  background-color: #ddd8d8;
+}
+.review{
+  width: 60%;
+  margin: 0 auto;
+  height: 400px;
+}
+.rev{
+  float: left;
+  margin: 0 auto;
+  width: 30%;
+  border: 1px solid #f5b92f; 
+  border-radius: 10px;
+  padding: 0px 10px;
+  height: 350px;
+}
+
+#rev1 {
+  margin-right: 20px;
+}
+#rev2 {
+  margin-right: 20px;
+}
+.rev img{
+  width: 150px;
+  height: 120px; 
+  margin-left: 80px;
+}
+.review #rev_voice{
+  font-size: 13px;
+  text-align: left;
+  line-height: 25px;
+}
+.benefit{
+  margin: 0 auto;
+}
+.sub_bene{
+  width: 20%;
+  margin: 0 auto;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid white;
+  background-color: #facd7a;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+.benebox{
+  width: 60%;
+  height: 300px;
+  margin: 0 auto;
+  text-align: center;
+  border: 1px solid  #f5b92f ;
+  padding-top: 20px;
+  border-radius: 15px;
+}
+.bene1{
+  display: inline-block;
+  width: 30%;
+  height: 200px;
+  margin-right: 20px;
+
+}
+.bene2{
+  display: inline-block; 
+  width: 30%;
+  height: 200px;
+  margin-right: 20px;
+}
+.bene3{
+  display: inline-block;
+  width: 30%;
+  height: 200px;
+}
+.bene_img img{
+  width: 240px;
+  height: 180px;
+  margin-bottom: 15px;
+  
+}
+.bene_voice{
+  line-height: 25px;
+  text-align: left;
+}
+.btn{
+  width: 20%;
+  margin-left: 750px;
+  text-align: center;
+  background-color: #f5b216d8 ;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 15px;
+}
+.btn:hover{
+  color: white;
+}

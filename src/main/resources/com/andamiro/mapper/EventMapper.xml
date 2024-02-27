@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.andamiro.mapper.EventMapper">
+
+	<select id="getList"
+		resultType="com.andamiro.domain.event.EventVO">
+	<![CDATA[
+	SELECT*FROM EVENTMAIN WHERE EVENTNO>0
+		]]>
+	</select>
+
+	<insert id="insert">
+		insert into eventmain(eventno,eventkind,eterm,ing,imgsum,poster)
+		values(eventno_sequence.nextval,#{eventkind},#{eterm},#{ing},#{imgsum},#{poster})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="eventno" order="BEFORE"
+			resultType="int">
+			select eventno_sequence.nextval from dual
+		</selectKey>
+
+		insert into eventmain(eventno, eventkind, eterm, ing, imgsum, poster)
+		values(#{eventno}, #{eventkind}, #{eterm}, #{ing}, #{imgsum},
+		#{poster})
+	</insert>
+
+
+	<select id="read" resultType="com.andamiro.domain.event.EventVO">
+		select * from eventmain where
+		eventno = #{eventno}
+
+	</select>
+
+	<delete id="delete">
+		delete from eventmain where eventno = #{eventno}
+	</delete>
+
+
+
+	<update id="update">
+		update eventmain
+		set eventkind=#{eventkind},
+		eterm=#{eterm},
+		ing=#{ing},
+		imgsum=#{imgsum},
+		poster=#{poster}
+		where
+		eventno=#{eventno}
+
+	</update>
+
+
+
+
+</mapper>
